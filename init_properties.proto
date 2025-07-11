@@ -1,0 +1,26 @@
+syntax = "proto3";
+import public "global_options.proto";
+
+option go_package="./;proto";
+option java_package = "org.liquibase.grpc.proto";
+option java_multiple_files = true;
+option java_outer_classname = "InitPropertiesProto";
+
+package liquibase.pro;
+
+service InitPropertiesService {
+  rpc execute(Init.PropertiesRequest) returns (Response) {}
+}
+
+/* [PRO] Generate a summary of all Liquibase properties available. */
+message Init {
+  message PropertiesRequest {
+    optional bool report_enabled = 1; // Enable or disable reporting.
+    optional string report_path = 2; // The path to the directory to generate the report.
+    liquibase.GlobalOptions global_options = 3;
+  }
+}
+
+message Response {
+  string message = 1;
+}
